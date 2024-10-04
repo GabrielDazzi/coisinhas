@@ -28,7 +28,6 @@ css:
 
 
 js:
-
 function showNotification(message, duration = 3000, r = 51, g = 51, b = 51) {
     // Selecionar os elementos da notificação
     const notificationPopup = document.getElementById('notification-popup');
