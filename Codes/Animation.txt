@@ -1,26 +1,30 @@
 js
-// Verifica a visibilidade ao carregar e ao rolar a página
-window.addEventListener('scroll', checkVisibility);
-window.addEventListener('load', checkVisibility);
-
 // Função para aplicar a animação de fade-in
 function applyFadeInAnimation() {
-    const elementsToFade = document.querySelectorAll('(class)');
-
-    const observer = new IntersectionObserver((entries) => {
+    // Seleciona todos os elementos com a classe .row
+    const elementsToFade = document.querySelectorAll('.row');
+    // Cria um IntersectionObserver para monitorar a visibilidade dos elementos
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
+            // Se o elemento estiver visível na viewport
             if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-                observer.unobserve(entry.target); // Para observar apenas uma vez
+                entry.target.classList.add('show'); // Aplica a classe show
+                observer.unobserve(entry.target); // Para de observar o elemento
             }
         });
     });
 
+    // Para cada elemento .row, adiciona a classe fade-in e começa a observar
     elementsToFade.forEach(el => {
-        el.classList.add('fade-in'); // Adiciona a classe fade-in
-        observer.observe(el); // Observa cada elemento
+        el.classList.add('fade-in'); // Adiciona a classe fade-in inicialmente
+        observer.observe(el); // Observa o elemento
     });
 }
+
+// Execute a animação ao carregar e ao rolar
+window.addEventListener('scroll', applyFadeInAnimation);
+window.addEventListener('load', applyFadeInAnimation);
+
 
 css
 @keyframes fadeInUp {
@@ -32,4 +36,13 @@ css
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.fade-in {
+    opacity: 0; 
+    transition: opacity 0.5s ease-in-out; 
+}
+
+.fade-in.show {
+    opacity: 1; 
 }
